@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux'
+
+import User from './components/User'
+import {
+  setName,
+  setAge
+} from './actions'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <User username={this.props.user.name} age={this.props.user.age}/>
+        <button onClick={() => this.props.setName("KongRukSiam")}>Change Name</button>
+        <button onClick={() => this.props.setAge(22)}>Change Age</button>
       </div>
     );
   }
 }
-
-export default App;
+const mapStateToProps = (state) => {
+  return ({
+    user: state.employee,
+    salary: state.salary
+  })
+}
+export default connect(mapStateToProps, {setName, setAge})(App);
